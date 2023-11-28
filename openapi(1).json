@@ -1,0 +1,618 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Doação de Animais",
+    "version": "0.0.1",
+    "description": "Esta é uma API que demonstra não só a doação de animais, mas também outros aspetos, como por exemplo o registro de doações de brinquedos e comidas para os animais.",
+    "contact": {
+      "name": "a042166",
+      "email": "a042166@umaia.pt"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "My localhost",
+      "variables": {
+        "basePath": {
+          "default": "/"
+        }
+      }
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Animal": {
+        "title": "Animal",
+        "type": "object",
+        "properties": {
+          "idAnimal": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer"
+          },
+          "typeAnimal": {
+            "type": "string"
+          },
+          "breed": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "Adocao": {
+        "title": "Adoção",
+        "type": "object",
+        "properties": {
+          "idAnimal": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "morada": {
+            "type": "string"
+          },
+          "idPessoa": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idVoluntario": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "required": [
+          "idAnimal",
+          "morada",
+          "idPessoa",
+          "idVoluntario"
+        ],
+        "additionalProperties": false
+      },
+      "Voluntario": {
+        "title": "Voluntário",
+        "type": "object",
+        "properties": {
+          "idVoluntario": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "anoInicioVoluntario": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "phoneNumber": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "address": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idVoluntario"
+        ]
+      },
+      "BensENecessidades": {
+        "title": "Bens e necessidades",
+        "type": "object",
+        "properties": {
+          "idPessoa": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "quantity": {
+            "type": "integer"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idPessoa",
+          "quantity",
+          "type"
+        ]
+      }
+    },
+    "examples": {
+      "AnimalExample01": {
+        "value": {
+          "id": 1,
+          "name": "Bobi",
+          "age": 3,
+          "typeAnimal": "Dog",
+          "breed": "Yorkshire",
+          "description": "This dog is normal"
+        }
+      },
+      "AnimalExample02": {
+        "value": {
+          "id": 2,
+          "name": "Mizuki",
+          "age": 5,
+          "typeAnimal": "Cat",
+          "breed": "Birman",
+          "description": "This cat is hypoallergenic"
+        }
+      },
+      "LessonExample01": {
+        "value": {
+          "id": 1,
+          "name": "Lesson 01",
+          "description": "My lesson",
+          "color": null
+        }
+      },
+      "LessonExample02": {
+        "value": {
+          "id": 2,
+          "name": "Lesson 02",
+          "description": "My lesson",
+          "color": null
+        }
+      }
+    }
+  },
+  "paths": {
+    "/animal": {
+      "get": {
+        "tags": [
+          "RegistoAnimal"
+        ],
+        "operationId": "retrieveAnimals",
+        "summary": "Retrieve all animals",
+        "responses": {
+          "200": {
+            "description": "Array of Animals model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Animal"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Animal"
+                  },
+                  "xml": {
+                    "name": "Animal"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "RegistoAnimal"
+        ],
+        "operationId": "registoAnimal",
+        "summary": "Registers an animal",
+        "responses": {
+          "200": {
+            "description": "Create a record of an Animal model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Animal"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Animal"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Animal"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/animal/{id}": {
+      "get": {
+        "tags": [
+          "RegistoAnimal"
+        ],
+        "operationId": "retrieveAnAnimal",
+        "summary": "Retrive an animal",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Animal"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Animal"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "id not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Retrieve Animal id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Retrieve Animal id 2"
+              }
+            }
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "RegistoAnimal"
+        ],
+        "operationId": "updateAnAnimal",
+        "summary": "Update an animal",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Update PUI success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "id not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Update Animal id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Update Animal id 2"
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Animal"
+              },
+              "examples": {
+                "AnimalExample01": {
+                  "$ref": "#/components/examples/AnimalExample01"
+                },
+                "AnimalExample02": {
+                  "$ref": "#/components/examples/AnimalExample02"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "RegistoAnimal"
+        ],
+        "operationId": "deleteAnAnimal",
+        "summary": "Delete an animal",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "id not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Delete Animal id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Delete Animal id 2"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/lesson": {
+      "get": {
+        "tags": [
+          "LessonsController"
+        ],
+        "operationId": "retrieveLessons",
+        "summary": "Retrieve Lessons",
+        "responses": {
+          "200": {
+            "description": "Array of Lessons model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Lesson"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Lesson"
+                  },
+                  "xml": {
+                    "name": "Schedules"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "LessonsController"
+        ],
+        "operationId": "createLessons",
+        "summary": "Create Lesson",
+        "responses": {
+          "200": {
+            "description": "Create a Lesson model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Lesson"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Lesson"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Lesson"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lessons/{id}": {
+      "get": {
+        "tags": [
+          "LessonsController"
+        ],
+        "operationId": "retrieveLesson",
+        "summary": "Retrieve Lessons",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Lesson"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "id not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Retrieve Lesson id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Retrieve Lesson id 2"
+              }
+            }
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "LessonsController"
+        ],
+        "operationId": "updateLesson",
+        "summary": "Update Schedule",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Lesson PUI success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "id not founf"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Update Lesson id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Update Lesson id 2"
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Lesson"
+              },
+              "examples": {
+                "AeroportoExample01": {
+                  "$ref": "#/components/examples/LessonExample01"
+                },
+                "AeroportoExample02": {
+                  "$ref": "#/components/examples/LessonExample02"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "LessonsController"
+        ],
+        "operationId": "deleteLesson",
+        "summary": "Delete lesson",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "id not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Delete Lesson id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Delete Lesson id 2"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
