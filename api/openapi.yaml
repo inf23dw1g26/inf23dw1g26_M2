@@ -1,0 +1,807 @@
+openapi: 3.0.0
+info:
+  title: Doação de Animais
+  description: "Esta é uma API que demonstra não só a doação de animais, mas també\
+    m outros aspetos, como por exemplo o registro de doações de brinquedos e comidas\
+    \ para os animais."
+  contact:
+    name: a042166
+    email: a042166@umaia.pt
+  version: 0.0.1
+servers:
+- url: http://localhost:8080
+  description: My localhost
+  variables:
+    basePath:
+      default: /
+paths:
+  /animal:
+    get:
+      tags:
+      - RegisterAnimal
+      summary: Retrieve all animals
+      operationId: retrieveAnimals
+      responses:
+        "200":
+          description: Array of Animals model instances
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Animal'
+                x-content-type: application/json
+            application/xml:
+              schema:
+                type: array
+                xml:
+                  name: Animal
+                items:
+                  $ref: '#/components/schemas/Animal'
+      x-swagger-router-controller: RegisterAnimal
+    post:
+      tags:
+      - RegisterAnimal
+      summary: Register an animal
+      operationId: registerAnimal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Animal'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Animal'
+      responses:
+        "200":
+          description: Create a record of an Animal model instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Animal'
+      x-swagger-router-controller: RegisterAnimal
+  /animal/{id}:
+    get:
+      tags:
+      - RegisterAnimal
+      summary: Retrive an animal
+      operationId: retrieveAnAnimal
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+        examples:
+          one:
+            summary: Retrieve Animal id 1
+            value: 1
+          two:
+            summary: Retrieve Animal id 2
+            value: 2
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Animal'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Animal'
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+      x-swagger-router-controller: RegisterAnimal
+    put:
+      tags:
+      - RegisterAnimal
+      summary: Update an animal
+      operationId: updateAnAnimal
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+        examples:
+          one:
+            summary: Update Animal id 1
+            value: 1
+          two:
+            summary: Update Animal id 2
+            value: 2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Animal'
+            examples:
+              AnimalExample01:
+                $ref: '#/components/examples/AnimalExample01'
+              AnimalExample02:
+                $ref: '#/components/examples/AnimalExample02'
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                description: Update PUI success
+                x-content-type: application/json
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+      x-swagger-router-controller: RegisterAnimal
+    delete:
+      tags:
+      - RegisterAnimal
+      summary: Delete an animal
+      operationId: deleteAnAnimal
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+        examples:
+          one:
+            summary: Delete Animal id 1
+            value: 1
+          two:
+            summary: Delete Animal id 2
+            value: 2
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: id not found
+      x-swagger-router-controller: RegisterAnimal
+  /adoption:
+    get:
+      tags:
+      - RegisterAdoption
+      summary: Retrieve all adoptions
+      operationId: retrieveAllAdoptions
+      responses:
+        "200":
+          description: Array of Adoption model instances
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Adoption'
+                x-content-type: application/json
+            application/xml:
+              schema:
+                type: array
+                xml:
+                  name: Adoption
+                items:
+                  $ref: '#/components/schemas/Adoption'
+      x-swagger-router-controller: RegisterAdoption
+    post:
+      tags:
+      - RegisterAdoption
+      summary: Create an adoption
+      operationId: createAdoption
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Adoption'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Adoption'
+      responses:
+        "200":
+          description: Create an Adoption model instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Adoption'
+      x-swagger-router-controller: RegisterAdoption
+  /Adoption/{id}:
+    get:
+      tags:
+      - RegisterAdoption
+      summary: Retrieve an adoption
+      operationId: retrieveAdoptions
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+        examples:
+          one:
+            summary: Retrieve Adoption id 1
+            value: 1
+          two:
+            summary: Retrieve Adoption id 2
+            value: 2
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Adoption'
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+      x-swagger-router-controller: RegisterAdoption
+    put:
+      tags:
+      - RegisterAdoption
+      summary: Update an adoption
+      operationId: updateAdoption
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+        examples:
+          one:
+            summary: Update Adoption id 1
+            value: 1
+          two:
+            summary: Update Adoption id 2
+            value: 2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Adoption'
+            examples:
+              AdocaoExample01:
+                $ref: '#/components/examples/AdoptionExample01'
+              AdocaoExample02:
+                $ref: '#/components/examples/AdoptionExample02'
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                description: Adoption PUI success
+                x-content-type: application/json
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+      x-swagger-router-controller: RegisterAdoption
+    delete:
+      tags:
+      - RegisterAdoption
+      summary: Delete an adoption
+      operationId: deleteAdoption
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+        examples:
+          one:
+            summary: Delete Adoption id 1
+            value: 1
+          two:
+            summary: Delete Adoption id 2
+            value: 2
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: id not found
+      x-swagger-router-controller: RegisterAdoption
+  /Volunteer:
+    get:
+      tags:
+      - RegisterVolunteer
+      summary: Retrieve all volunteers
+      operationId: retrieveVolunteer
+      responses:
+        "200":
+          description: Array of volunteer model instances
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Volunteer'
+                x-content-type: application/json
+            application/xml:
+              schema:
+                type: array
+                xml:
+                  name: Volunteer
+                items:
+                  $ref: '#/components/schemas/Volunteer'
+      x-swagger-router-controller: RegisterVolunteer
+    post:
+      tags:
+      - RegisterVolunteer
+      summary: Create volunteer
+      operationId: createVolunteer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Volunteer'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Volunteer'
+      responses:
+        "200":
+          description: Create a volunteer model instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volunteer'
+      x-swagger-router-controller: RegisterVolunteer
+  /Volunteer/{id}:
+    get:
+      tags:
+      - RegisterVolunteer
+      summary: Retrieve a volunteer
+      operationId: retrieveAVolunteer
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+        examples:
+          one:
+            summary: Retrieve Voluntario id 1
+            value: 1
+          two:
+            summary: Retrieve Voluntario id 2
+            value: 2
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volunteer'
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+      x-swagger-router-controller: RegisterVolunteer
+    put:
+      tags:
+      - RegisterVolunteer
+      summary: Update a volunteer
+      operationId: updateVolunteer
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+        examples:
+          one:
+            summary: Update volunteer id 1
+            value: 1
+          two:
+            summary: Update volunteer id 2
+            value: 2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Volunteer'
+            examples:
+              AdocaoExample01:
+                $ref: '#/components/examples/VolunteerExample01'
+              AdocaoExample02:
+                $ref: '#/components/examples/VolunteerExample02'
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                description: Volunteer PUI success
+                x-content-type: application/json
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+      x-swagger-router-controller: RegisterVolunteer
+    delete:
+      tags:
+      - RegisterVolunteer
+      summary: Delete a volunteer
+      operationId: deleteVolunteer
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+        examples:
+          one:
+            summary: Delete a volunteer id 1
+            value: 1
+          two:
+            summary: Delete a volunteer id 2
+            value: 2
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: id not found
+      x-swagger-router-controller: RegisterVolunteer
+  /Donation:
+    get:
+      tags:
+      - RegisterDonations
+      summary: Retrieve all donations
+      operationId: retrieveDonation
+      responses:
+        "200":
+          description: Array of donations model instances
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Donations'
+                x-content-type: application/json
+            application/xml:
+              schema:
+                type: array
+                xml:
+                  name: Donation
+                items:
+                  $ref: '#/components/schemas/Donations'
+      x-swagger-router-controller: RegisterDonations
+    post:
+      tags:
+      - RegisterDonations
+      summary: Create a donation
+      operationId: createDonation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Donations'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Donations'
+      responses:
+        "200":
+          description: Create a donation model instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Donations'
+      x-swagger-router-controller: RegisterDonations
+  /Donation/{id}:
+    get:
+      tags:
+      - RegisterDonations
+      summary: Retrieve a donation
+      operationId: retrieveADonation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+        examples:
+          one:
+            summary: Retrieve donation id 1
+            value: 1
+          two:
+            summary: Retrieve donation id 2
+            value: 2
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Donations'
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+      x-swagger-router-controller: RegisterDonations
+    put:
+      tags:
+      - RegisterDonations
+      summary: Update a donation
+      operationId: updateDonation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+        examples:
+          one:
+            summary: Update donation id 1
+            value: 1
+          two:
+            summary: Update donation id 2
+            value: 2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Donations'
+            examples:
+              AdocaoExample01:
+                $ref: '#/components/examples/DonationExample01'
+              AdocaoExample02:
+                $ref: '#/components/examples/DonationExample02'
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                description: Donation PUI success
+                x-content-type: application/json
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+      x-swagger-router-controller: RegisterDonations
+    delete:
+      tags:
+      - RegisterDonations
+      summary: Delete a donation
+      operationId: deleteDonation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+        examples:
+          one:
+            summary: Delete a donation id 1
+            value: 1
+          two:
+            summary: Delete a donation id 2
+            value: 2
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: id not found
+      x-swagger-router-controller: RegisterDonations
+components:
+  schemas:
+    Animal:
+      title: Animal
+      required:
+      - idAnimal
+      - name
+      - typeAnimal
+      type: object
+      properties:
+        idAnimal:
+          type: integer
+          format: int64
+        name:
+          type: string
+        age:
+          type: integer
+        typeAnimal:
+          type: string
+        breed:
+          type: string
+        description:
+          type: string
+      additionalProperties: false
+      example:
+        idAnimal: 0
+        typeAnimal: typeAnimal
+        name: name
+        description: description
+        age: 6
+        breed: breed
+    Adoption:
+      title: Adoption
+      required:
+      - idAnimal
+      - idPerson
+      - idVoluntario
+      - morada
+      type: object
+      properties:
+        idAnimal:
+          type: integer
+          format: int64
+        name:
+          type: string
+        address:
+          type: string
+        idPerson:
+          type: integer
+          format: int64
+        idVoluntario:
+          type: integer
+          format: int64
+        description:
+          type: string
+      additionalProperties: false
+      example:
+        idAnimal: 0
+        idVoluntario: 1
+        address: address
+        idPerson: 6
+        name: name
+        description: description
+    Volunteer:
+      title: Volunteer
+      required:
+      - idVoluntario
+      type: object
+      properties:
+        idVolunteer:
+          type: integer
+          format: int64
+        name:
+          type: string
+        anoInicioVolunteering:
+          type: integer
+          format: int64
+        phoneNumber:
+          type: integer
+          format: int64
+        address:
+          type: string
+      example:
+        phoneNumber: 1
+        address: address
+        idVolunteer: 0
+        name: name
+        anoInicioVolunteering: 6
+    Donations:
+      title: Donations of food and toys
+      required:
+      - idDonation
+      - idPerson
+      - quantity
+      - type
+      type: object
+      properties:
+        idDonation:
+          type: integer
+          format: int64
+        idPerson:
+          type: integer
+          format: int64
+        type:
+          type: string
+        quantity:
+          type: integer
+      example:
+        idPerson: 6
+        quantity: 1
+        type: type
+        idDonation: 0
+  examples:
+    AnimalExample01:
+      value:
+        idAnimal: 1
+        name: Bobi
+        age: 3
+        typeAnimal: Dog
+        breed: Yorkshire
+        description: This dog is normal
+    AnimalExample02:
+      value:
+        idAnimal: 2
+        name: Mizuki
+        age: 5
+        typeAnimal: Cat
+        breed: Birman
+        description: This cat is hypoallergenic
+    AdoptionExample01:
+      value:
+        idAnimal: 1
+        name: Adoption 01
+        address: Rua dos peixes 17 1º andar
+        idPerson: 1
+        idVolunteer: 1
+        description: The animal of this adoption was a dog named Bobi.
+    AdoptionExample02:
+      value:
+        id: 2
+        name: Adoption 02
+        address: Rua das flores 13 3º andar
+        idPerson: 2
+        idVolunteer: 2
+        description: The animal of this adoption was a hypoallergenic cat named Mizuki.
+    VolunteerExample01:
+      value:
+        idVolunteer: 1
+        name: Joaquim
+        anoInicioVolunteering: 2018
+        phoneNumber: 939339396
+        address: Rua das pedras 31 4º andar
+    VolunteerExample02:
+      value:
+        idVolunteer: 2
+        name: Bruna
+        anoInicioVolunteering: 2021
+        phoneNumber: 938521766
+        address: Rua da poça 12 2º andar
+    DonationExample01:
+      value:
+        idDonation: 1
+        idPerson: 2
+        type: food
+        quantity: 10
+    DonationExample02:
+      value:
+        idDonation: 2
+        idPerson: 3
+        type: toys
+        quantity: 5
