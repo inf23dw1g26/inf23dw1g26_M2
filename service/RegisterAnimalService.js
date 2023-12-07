@@ -7,9 +7,19 @@
  * id Long 
  * no response value expected for this operation
  **/
-exports.deleteAnAnimal = function(id) {
+exports.deleteAnAnimal = function(idAnimal) {
   return new Promise(function(resolve, reject) {
-    resolve();
+    sql.query("DELETE FROM animais WHERE idAnimal = ?", [idAnimal], function (err,res){
+      if (err || !res.affectedRows){
+        console.log(err);
+        console.log(res);
+        reject();
+      }
+      else {
+        console.log(res);
+        resolve({"deleted":idAnimal});
+      }
+    });
   });
 }
 
@@ -22,22 +32,20 @@ exports.deleteAnAnimal = function(id) {
  **/
 exports.registerAnimal = function(body) {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "idAnimal" : 0,
-  "typeAnimal" : "typeAnimal",
-  "name" : "name",
-  "description" : "description",
-  "age" : 6,
-  "breed" : "breed"
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
+    console.log(body);
+    sql.query("INSERT INTO animais (name, age, typeAnimal, breed, description) Values(?,?,?,?,?)", [body.name, body.age, body.typeAnimal, body.breed, body.description], function (err,res){
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+      else {
+        console.log(res.insertId);
+        resolve(res.insertId);
+      }
+    });
   });
-}
+  
+    }
 
 
 /**
@@ -46,25 +54,20 @@ exports.registerAnimal = function(body) {
  * id Long 
  * returns Animal
  **/
-exports.retrieveAnAnimal = function(id) {
+exports.retrieveAnAnimal = function(idAnimal) {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "idAnimal" : 0,
-  "typeAnimal" : "typeAnimal",
-  "name" : "name",
-  "description" : "description",
-  "age" : 6,
-  "breed" : "breed"
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    sql.query("SELECT * FROM animais WHERE idAnimal = ?", [id], function(err,res){
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+      else {
+        console.log(res);
+        resolve(res[0]);
+      }
+    });
+});
 }
-
 
 /**
  * Retrieve all animals
@@ -73,29 +76,18 @@ exports.retrieveAnAnimal = function(id) {
  **/
 exports.retrieveAnimals = function() {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "idAnimal" : 0,
-  "typeAnimal" : "typeAnimal",
-  "name" : "name",
-  "description" : "description",
-  "age" : 6,
-  "breed" : "breed"
-}, {
-  "idAnimal" : 0,
-  "typeAnimal" : "typeAnimal",
-  "name" : "name",
-  "description" : "description",
-  "age" : 6,
-  "breed" : "breed"
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
-}
+    sql.query("SELECT * FROM animais", function (err,res){
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+      else {
+        console.log(res);
+        resolve(res);
+      }
+      });
+    });
+  }
 
 
 /**
@@ -105,9 +97,20 @@ exports.retrieveAnimals = function() {
  * id Long 
  * no response value expected for this operation
  **/
-exports.updateAnAnimal = function(body,id) {
+exports.updateAnAnimal = function(body,idAnimal) {
   return new Promise(function(resolve, reject) {
-    resolve();
+    console.log(body);
+    sql.query("UPDATE animais set name = ?, age = ?, typeAnimal = ?, WHERE breed = ?, WHERE description = ?, WHERE idAnimal = ?", [body.name, body.age, body.typeAnimal, body.breed, body.description, idAnimal], function (err,res){
+      if (err){
+        console.log(err);
+        reject(err);
+
+      }
+      else {
+        console.log(res);
+        resolve(idAnimal);
+      }
+    });
   });
 }
 

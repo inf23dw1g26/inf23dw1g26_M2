@@ -1,6 +1,6 @@
 'use strict';
 
-
+var sql = require('../utils/db.js');
 /**
  * Create an adoption
  *
@@ -9,22 +9,21 @@
  **/
 exports.createAdoption = function(body) {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "idAnimal" : 0,
-  "idVoluntario" : 1,
-  "address" : "address",
-  "idPerson" : 6,
-  "name" : "name",
-  "description" : "description"
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+  console.log(body);
+  sql.query("INSERT INTO adoption (name, adress, description) Values(?,?,?)", [body.name, body.description, body.description], function (err,res){
+    if (err) {
+      console.log(err);
+      reject(err);
+    }
+    else {
+      console.log(res.insertId);
+      resolve(res.insertId);
     }
   });
-}
+});
+
+  }
+
 
 
 /**
@@ -33,9 +32,19 @@ exports.createAdoption = function(body) {
  * id Long 
  * no response value expected for this operation
  **/
-exports.deleteAdoption = function(id) {
+exports.deleteAdoption = function(idAdoption) {
   return new Promise(function(resolve, reject) {
-    resolve();
+    sql.query("DELETE FROM adoption WHERE idAdoption = ?", [idAdoption], function(err,res){
+      if (err || !res.affectedRows){
+        console.log(err);
+        console.log(res);
+        reject();
+      }
+      else {
+        console.log(res);
+        resolve({"deleted":idAdoption});
+      }
+    });
   });
 }
 
@@ -46,23 +55,19 @@ exports.deleteAdoption = function(id) {
  * id Long 
  * returns Adoption
  **/
-exports.retrieveAdoptions = function(id) {
+exports.retrieveAdoptions = function(idAdoption) {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "idAnimal" : 0,
-  "idVoluntario" : 1,
-  "address" : "address",
-  "idPerson" : 6,
-  "name" : "name",
-  "description" : "description"
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    sql.query("SELECT * FROM adoption WHERE idAdoption = ?", [id], function(err,res){
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+      else {
+        console.log(res);
+        resolve(res[0]);
+      }
+    });
+});
 }
 
 
@@ -73,29 +78,18 @@ exports.retrieveAdoptions = function(id) {
  **/
 exports.retrieveAllAdoptions = function() {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "idAnimal" : 0,
-  "idVoluntario" : 1,
-  "address" : "address",
-  "idPerson" : 6,
-  "name" : "name",
-  "description" : "description"
-}, {
-  "idAnimal" : 0,
-  "idVoluntario" : 1,
-  "address" : "address",
-  "idPerson" : 6,
-  "name" : "name",
-  "description" : "description"
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
-}
+    sql.query("SELECT * FROM adoption", function (err,res){
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+      else {
+        console.log(res);
+        resolve(res);
+      }
+      });
+    });
+  }
 
 
 /**
@@ -105,9 +99,20 @@ exports.retrieveAllAdoptions = function() {
  * id Long 
  * no response value expected for this operation
  **/
-exports.updateAdoption = function(body,id) {
+exports.updateAdoption = function(body,idAdoption) {
   return new Promise(function(resolve, reject) {
-    resolve();
+    console.log(body);
+    sql.query("UPDATE adoption set name = ?, adress = ?, description = ? WHERE idAdoption = ?", [body.name, body.adress, body.description, idAdoption], function (err,res){
+      if (err){
+        console.log(err);
+        reject(err);
+
+      }
+      else {
+        console.log(res);
+        resolve(idAdoption);
+      }
+    });
   });
 }
 

@@ -9,22 +9,20 @@
  **/
 exports.createVolunteer = function(body) {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "phoneNumber" : 1,
-  "address" : "address",
-  "idVolunteer" : 0,
-  "name" : "name",
-  "anoInicioVolunteering" : 6
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
+    console.log(body);
+    sql.query("INSERT INTO volunteer (name, anoInicioVolunteering, phoneNumber, adress) Values(?,?,?,?)", [body.name, body.anoInicioVolunteering, body.phoneNumber, body.address], function (err,res){
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+      else {
+        console.log(res.insertId);
+        resolve(res.insertId);
+      }
+    });
   });
-}
-
+  
+    }
 
 /**
  * Delete a volunteer
@@ -32,9 +30,19 @@ exports.createVolunteer = function(body) {
  * id Long 
  * no response value expected for this operation
  **/
-exports.deleteVolunteer = function(id) {
+exports.deleteVolunteer = function(idVolunteer) {
   return new Promise(function(resolve, reject) {
-    resolve();
+    sql.query("DELETE FROM volunteer WHERE idVolunteer = ?", [idVolunteer], function(err,res){
+      if (err || !res.affectedRows){
+        console.log(err);
+        console.log(res);
+        reject();
+      }
+      else {
+        console.log(res);
+        resolve({"deleted":idVolunteer});
+      }
+    });
   });
 }
 
@@ -45,23 +53,21 @@ exports.deleteVolunteer = function(id) {
  * id Long 
  * returns Volunteer
  **/
-exports.retrieveAVolunteer = function(id) {
+exports.retrieveAVolunteer = function(idVolunteer) {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "phoneNumber" : 1,
-  "address" : "address",
-  "idVolunteer" : 0,
-  "name" : "name",
-  "anoInicioVolunteering" : 6
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    sql.query("SELECT * FROM volunteer WHERE idVolunteer = ?", [idVolunteer], function(err,res){
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+      else {
+        console.log(res);
+        resolve(res[0]);
+      }
+    });
+});
 }
+
 
 
 /**
@@ -71,28 +77,18 @@ exports.retrieveAVolunteer = function(id) {
  **/
 exports.retrieveVolunteer = function() {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "phoneNumber" : 1,
-  "address" : "address",
-  "idVolunteer" : 0,
-  "name" : "name",
-  "anoInicioVolunteering" : 6
-}, {
-  "phoneNumber" : 1,
-  "address" : "address",
-  "idVolunteer" : 0,
-  "name" : "name",
-  "anoInicioVolunteering" : 6
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
-}
-
+    sql.query("SELECT * FROM volunteer", function (err,res){
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+      else {
+        console.log(res);
+        resolve(res);
+      }
+      });
+    });
+  }
 
 /**
  * Update a volunteer
@@ -101,9 +97,20 @@ exports.retrieveVolunteer = function() {
  * id Long 
  * no response value expected for this operation
  **/
-exports.updateVolunteer = function(body,id) {
+exports.updateVolunteer = function(body,idVolunteer) {
   return new Promise(function(resolve, reject) {
-    resolve();
+    console.log(body);
+    sql.query("UPDATE adoption set name = ?, anoInicioVolunteering = ?, phoneNumber = ?, WHERE adress = ?, WHERE idVolunteer = ?", [body.name, body.anoInicioVolunteering, body.phoneNumber, address, idVolunteer], function (err,res){
+      if (err){
+        console.log(err);
+        reject(err);
+
+      }
+      else {
+        console.log(res);
+        resolve(idVolunteer);
+      }
+    });
   });
 }
 
