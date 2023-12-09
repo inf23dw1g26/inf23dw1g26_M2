@@ -15,6 +15,7 @@ module.exports.deleteAnAnimal = function deleteAnAnimal (req, res, next, id) {
 
 module.exports.registerAnimal = function registerAnimal (req, res, next, body) {
   RegisterAnimal.registerAnimal(body)
+    .then(RegisterAnimal.retrieveAnAnimal)
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -45,6 +46,7 @@ module.exports.retrieveAnimals = function retrieveAnimals (req, res, next) {
 
 module.exports.updateAnAnimal = function updateAnAnimal (req, res, next, body, id) {
   RegisterAnimal.updateAnAnimal(body, id)
+    .then(RegisterAnimal.retrieveAnAnimal)
     .then(function (response) {
       utils.writeJson(res, response);
     })

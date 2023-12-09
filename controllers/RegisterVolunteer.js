@@ -5,6 +5,7 @@ var RegisterVolunteer = require('../service/RegisterVolunteerService');
 
 module.exports.createVolunteer = function createVolunteer (req, res, next, body) {
   RegisterVolunteer.createVolunteer(body)
+    .then(RegisterAnimal.retrieveAnAnimal)
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -45,6 +46,7 @@ module.exports.retrieveVolunteer = function retrieveVolunteer (req, res, next) {
 
 module.exports.updateVolunteer = function updateVolunteer (req, res, next, body, id) {
   RegisterVolunteer.updateVolunteer(body, id)
+    .then(RegisterAnimal.retrieveAnAnimal)
     .then(function (response) {
       utils.writeJson(res, response);
     })

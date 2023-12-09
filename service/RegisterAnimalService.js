@@ -1,6 +1,6 @@
 'use strict';
 
-
+var sql = require('../utils/db.js');
 /**
  * Delete an animal
  *
