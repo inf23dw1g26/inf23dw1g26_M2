@@ -9,7 +9,7 @@ var sql = require('../utils/db.js');
  **/
 exports.deleteAnAnimal = function(idAnimal) {
   return new Promise(function(resolve, reject) {
-    sql.query("DELETE FROM animais WHERE idAnimal = ?", [idAnimal], function (err,res){
+    sql.query("DELETE FROM animal WHERE idAnimal = ?", [idAnimal], function (err,res){
       if (err || !res.affectedRows){
         console.log(err);
         console.log(res);
@@ -33,7 +33,7 @@ exports.deleteAnAnimal = function(idAnimal) {
 exports.registerAnimal = function(body) {
   return new Promise(function(resolve, reject) {
     console.log(body);
-    sql.query("INSERT INTO animais (name, age, typeAnimal, breed, description) Values(?,?,?,?,?)", [body.name, body.age, body.typeAnimal, body.breed, body.description], function (err,res){
+    sql.query("INSERT INTO animal (name, age, typeAnimal, breed, description) Values(?,?,?,?,?)", [body.name, body.age, body.typeAnimal, body.breed, body.description], function (err,res){
       if (err) {
         console.log(err);
         reject(err);
@@ -56,7 +56,7 @@ exports.registerAnimal = function(body) {
  **/
 exports.retrieveAnAnimal = function(idAnimal) {
   return new Promise(function(resolve, reject) {
-    sql.query("SELECT * FROM animais WHERE idAnimal = ?", [id], function(err,res){
+    sql.query("SELECT * FROM animal WHERE idAnimal = ?", [idAnimal], function(err,res){
       if (err) {
         console.log(err);
         reject(err);
@@ -76,7 +76,7 @@ exports.retrieveAnAnimal = function(idAnimal) {
  **/
 exports.retrieveAnimals = function() {
   return new Promise(function(resolve, reject) {
-    sql.query("SELECT * FROM animais", function (err,res){
+    sql.query("SELECT * FROM animal", function (err,res){
       if (err) {
         console.log(err);
         reject(err);
@@ -100,7 +100,7 @@ exports.retrieveAnimals = function() {
 exports.updateAnAnimal = function(body,idAnimal) {
   return new Promise(function(resolve, reject) {
     console.log(body);
-    sql.query("UPDATE animais set name = ?, age = ?, typeAnimal = ?, WHERE breed = ?, WHERE description = ?, WHERE idAnimal = ?", [body.name, body.age, body.typeAnimal, body.breed, body.description, idAnimal], function (err,res){
+    sql.query("UPDATE animal set name = ?, age = ?, typeAnimal = ?, breed = ?, description = ? WHERE idAnimal = ?", [body.name, body.age, body.typeAnimal, body.breed, body.description, idAnimal], function (err,res){
       if (err){
         console.log(err);
         reject(err);

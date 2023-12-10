@@ -15,7 +15,7 @@ create table animal (
 create table volunteer (
 	idVolunteer int primary key,
 	name varchar(50),
-	anoInicioanoInicioVolunteeringVolunteering int,
+	anoInicioVolunteering int,
 	phoneNumber varchar(9),
 	address varchar(100)
 	);
@@ -207,7 +207,7 @@ insert into donations (idDonation, idPerson, type, quantity) values (30, 30, 'fo
 
 ALTER TABLE volunteer DROP COLUMN anoInicioVolunteering;
 ALTER TABLE volunteer ADD anoInicioVolunteering int;
-
+ALTER TABLE volunteer MODIFY column idVolunteer INT NOT NULL AUTO_INCREMENT;
 
 
 

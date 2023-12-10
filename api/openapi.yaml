@@ -668,12 +668,16 @@ components:
     Adoption:
       title: Adoption
       required:
+      - idAdoption
       - idAnimal
       - idPerson
-      - idVoluntario
-      - morada
+      - idVolunteer
+      - address
       type: object
       properties:
+        idAdoption:
+          type: integer
+          format: int64
         idAnimal:
           type: integer
           format: int64
@@ -684,7 +688,7 @@ components:
         idPerson:
           type: integer
           format: int64
-        idVoluntario:
+        idVolunteer:
           type: integer
           format: int64
         description:
@@ -692,7 +696,7 @@ components:
       additionalProperties: false
       example:
         idAnimal: 0
-        idVoluntario: 1
+        idVolunteer: 1
         address: address
         idPerson: 6
         name: name
@@ -700,7 +704,7 @@ components:
     Volunteer:
       title: Volunteer
       required:
-      - idVoluntario
+      - idVolunteer
       type: object
       properties:
         idVolunteer:

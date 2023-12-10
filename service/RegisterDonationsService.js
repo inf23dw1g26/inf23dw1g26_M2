@@ -10,7 +10,7 @@ var sql = require('../utils/db.js');
 exports.createDonation = function(body) {
   return new Promise(function(resolve, reject) {
     console.log(body);
-    sql.query("INSERT INTO donations (idPerson, type, quantity) Values(?,?,?)", [body.idPerson, body.type, body.quantity], function (err,res){
+    sql.query("INSERT INTO donations (idDonation, idPerson, type, quantity) Values(?,?,?,?)", [body.idDonation, body.idPerson, body.type, body.quantity], function (err,res){
       if (err) {
         console.log(err);
         reject(err);
@@ -31,9 +31,9 @@ exports.createDonation = function(body) {
  * id Long 
  * no response value expected for this operation
  **/
-exports.deleteDonation = function(idDonations) {
+exports.deleteDonation = function(idDonation) {
   return new Promise(function(resolve, reject) {
-    sql.query("DELETE FROM donations WHERE  idDonations= ?", [idDonations], function(err,res){
+    sql.query("DELETE FROM donations WHERE  idDonation= ?", [idDonation], function(err,res){
       if (err || !res.affectedRows){
         console.log(err);
         console.log(res);
@@ -41,7 +41,7 @@ exports.deleteDonation = function(idDonations) {
       }
       else {
         console.log(res);
-        resolve({"deleted":idDonations});
+        resolve({"deleted":idDonation});
       }
     });
   });
@@ -54,9 +54,9 @@ exports.deleteDonation = function(idDonations) {
  * id Long 
  * returns Donations
  **/
-exports.retrieveADonation = function(idDonations) {
+exports.retrieveADonation = function(idDonation) {
   return new Promise(function(resolve, reject) {
-    sql.query("SELECT * FROM donations WHERE idDonations = ?", [idDonations], function(err,res){
+    sql.query("SELECT * FROM donations WHERE idDonation = ?", [idDonation], function(err,res){
       if (err) {
         console.log(err);
         reject(err);
@@ -98,10 +98,10 @@ exports.retrieveDonation = function() {
  * id Long 
  * no response value expected for this operation
  **/
-exports.updateDonation = function(body,idDonations) {
+exports.updateDonation = function(body,idDonation) {
   return new Promise(function(resolve, reject) {
     console.log(body);
-    sql.query("UPDATE adoption set idPerson = ?, type = ?, quantity = ? WHERE idDonations = ?", [body.idPerson, body.type, body.quantity, idDonations], function (err,res){
+    sql.query("UPDATE donations set idPerson = ?, type = ?, quantity = ? WHERE idDonation = ?", [body.idPerson, body.type, body.quantity, idDonation], function (err,res){
       if (err){
         console.log(err);
         reject(err);
@@ -109,7 +109,7 @@ exports.updateDonation = function(body,idDonations) {
       }
       else {
         console.log(res);
-        resolve(idDonations);
+        resolve(idDonation);
       }
     });
   });

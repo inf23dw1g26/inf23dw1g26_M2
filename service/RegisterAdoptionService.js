@@ -10,7 +10,7 @@ var sql = require('../utils/db.js');
 exports.createAdoption = function(body) {
   return new Promise(function(resolve, reject) {
   console.log(body);
-  sql.query("INSERT INTO adoption (name, adress, description) Values(?,?,?)", [body.name, body.description, body.description], function (err,res){
+  sql.query("INSERT INTO adoption (idAdoption, idAnimal, idPerson, idVolunteer, name, address, description) Values(?,?,?,?,?,?,?)", [body.idAdoption, body.idAnimal, body.idPerson, body.idVolunteer, body.name, body.address, body.description], function (err,res){
     if (err) {
       console.log(err);
       reject(err);
@@ -57,7 +57,7 @@ exports.deleteAdoption = function(idAdoption) {
  **/
 exports.retrieveAdoptions = function(idAdoption) {
   return new Promise(function(resolve, reject) {
-    sql.query("SELECT * FROM adoption WHERE idAdoption = ?", [id], function(err,res){
+    sql.query("SELECT * FROM adoption WHERE idAdoption = ?", [idAdoption], function(err,res){
       if (err) {
         console.log(err);
         reject(err);
@@ -102,7 +102,7 @@ exports.retrieveAllAdoptions = function() {
 exports.updateAdoption = function(body,idAdoption) {
   return new Promise(function(resolve, reject) {
     console.log(body);
-    sql.query("UPDATE adoption set name = ?, adress = ?, description = ? WHERE idAdoption = ?", [body.name, body.adress, body.description, idAdoption], function (err,res){
+    sql.query("UPDATE adoption set name = ?, address = ?, description = ? WHERE idAdoption = ?", [body.name, body.address, body.description, idAdoption], function (err,res){
       if (err){
         console.log(err);
         reject(err);

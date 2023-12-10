@@ -10,7 +10,7 @@ var sql = require('../utils/db.js');
 exports.createVolunteer = function(body) {
   return new Promise(function(resolve, reject) {
     console.log(body);
-    sql.query("INSERT INTO volunteer (name, anoInicioVolunteering, phoneNumber, adress) Values(?,?,?,?)", [body.name, body.anoInicioVolunteering, body.phoneNumber, body.address], function (err,res){
+    sql.query("INSERT INTO volunteer (name, anoInicioVolunteering, phoneNumber, address) Values(?,?,?,?)", [body.name, body.anoInicioVolunteering, body.phoneNumber, body.address], function (err,res){
       if (err) {
         console.log(err);
         reject(err);
@@ -100,7 +100,7 @@ exports.retrieveVolunteer = function() {
 exports.updateVolunteer = function(body,idVolunteer) {
   return new Promise(function(resolve, reject) {
     console.log(body);
-    sql.query("UPDATE adoption set name = ?, anoInicioVolunteering = ?, phoneNumber = ?, WHERE adress = ?, WHERE idVolunteer = ?", [body.name, body.anoInicioVolunteering, body.phoneNumber, address, idVolunteer], function (err,res){
+    sql.query("UPDATE volunteer set name = ?, anoInicioVolunteering = ?, phoneNumber = ?, address = ? WHERE idVolunteer = ?", [body.name, body.anoInicioVolunteering, body.phoneNumber, body.address, idVolunteer], function (err,res){
       if (err){
         console.log(err);
         reject(err);
