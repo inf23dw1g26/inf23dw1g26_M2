@@ -1,0 +1,1085 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Doação de Animais",
+    "version": "0.0.1",
+    "description": "Esta é uma API que demonstra não só a doação de animais, mas também outros aspetos, como por exemplo o registro de doações de brinquedos e comidas para os animais.",
+    "contact": {
+      "name": "a042166",
+      "email": "a042166@umaia.pt"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "My localhost",
+      "variables": {
+        "basePath": {
+          "default": "/"
+        }
+      }
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Animal": {
+        "title": "Animal",
+        "type": "object",
+        "properties": {
+          "idAnimal": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer"
+          },
+          "typeAnimal": {
+            "type": "string"
+          },
+          "breed": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "Adocao": {
+        "title": "Adoção",
+        "type": "object",
+        "properties": {
+          "idAnimal": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "morada": {
+            "type": "string"
+          },
+          "idPessoa": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idVoluntario": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idAnimal",
+          "morada",
+          "idPessoa",
+          "idVoluntario"
+        ],
+        "additionalProperties": false
+      },
+      "Voluntario": {
+        "title": "Voluntário",
+        "type": "object",
+        "properties": {
+          "idVoluntario": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "anoInicioVoluntario": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "phoneNumber": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "address": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idVoluntario"
+        ]
+      },
+      "Donation": {
+        "title": "Doações de comida e brinquedos",
+        "properties": {
+          "idDonation": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "quantity": {
+            "type": "integer"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "quantity",
+          "type"
+        ]
+      }
+    },
+    "examples": {
+      "AnimalExample01": {
+        "value": {
+          "id": 1,
+          "name": "Bobi",
+          "age": 3,
+          "typeAnimal": "Dog",
+          "breed": "Yorkshire",
+          "description": "This dog is normal"
+        }
+      },
+      "AnimalExample02": {
+        "value": {
+          "id": 2,
+          "name": "Mizuki",
+          "age": 5,
+          "typeAnimal": "Cat",
+          "breed": "Birman",
+          "description": "This cat is hypoallergenic"
+        }
+      },
+      "AdocaoExample01": {
+        "value": {
+          "id": 1,
+          "name": "Adocao 01",
+          "description": "The animal of this adoption was a dog named Bobi.",
+          "color": null
+        }
+      },
+      "AdocaoExample02": {
+        "value": {
+          "id": 2,
+          "name": "Adocao 02",
+          "description": "The animal of this adoption was a hypoallergenic cat named Mizuki.",
+          "color": null
+        }
+      },
+      "VoluntarioExample01": {
+        "value": {
+          "id": 1,
+          "name": "Joaquim",
+          "phoneNumber": 93933939
+        }
+      },
+      "VoluntarioExample02": {
+        "value": {
+          "id": 2,
+          "name": "Bruna",
+          "phoneNumber": 938521766
+        }
+      },
+      "DonationExample01": {
+        "value": {
+          "id": 1,
+          "name": "Brekkies",
+          "QuantityDonated": 10
+        }
+      },
+      "DonationExample02": {
+        "value": {
+          "id": 2,
+          "name": "Advance",
+          "QuantityDonated": 2
+        }
+      }
+    }
+  },
+  "paths": {
+    "/animal": {
+      "get": {
+        "tags": [
+          "RegistoAnimal"
+        ],
+        "operationId": "retrieveAnimals",
+        "summary": "Retrieve all animals",
+        "responses": {
+          "200": {
+            "description": "Array of Animals model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Animal"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Animal"
+                  },
+                  "xml": {
+                    "name": "Animal"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "RegistoAnimal"
+        ],
+        "operationId": "registoAnimal",
+        "summary": "Registers an animal",
+        "responses": {
+          "200": {
+            "description": "Create a record of an Animal model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Animal"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Animal"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Animal"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/animal/{id}": {
+      "get": {
+        "tags": [
+          "RegistoAnimal"
+        ],
+        "operationId": "retrieveAnAnimal",
+        "summary": "Retrive an animal",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Animal"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Animal"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "id not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Retrieve Animal id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Retrieve Animal id 2"
+              }
+            }
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "RegistoAnimal"
+        ],
+        "operationId": "updateAnAnimal",
+        "summary": "Update an animal",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Update PUI success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "id not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Update Animal id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Update Animal id 2"
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Animal"
+              },
+              "examples": {
+                "AnimalExample01": {
+                  "$ref": "#/components/examples/AnimalExample01"
+                },
+                "AnimalExample02": {
+                  "$ref": "#/components/examples/AnimalExample02"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "RegistoAnimal"
+        ],
+        "operationId": "deleteAnAnimal",
+        "summary": "Delete an animal",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "id not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Delete Animal id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Delete Animal id 2"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/adocao": {
+      "get": {
+        "tags": [
+          "RegistoAdocao"
+        ],
+        "operationId": "retrieveAdocao",
+        "summary": "Retrieve Adocoes",
+        "responses": {
+          "200": {
+            "description": "Array of Adocao model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Adocao"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Adocao"
+                  },
+                  "xml": {
+                    "name": "Adocao"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "RegistoAdocao"
+        ],
+        "operationId": "createAdocao",
+        "summary": "Create Adocao",
+        "responses": {
+          "200": {
+            "description": "Create an Adocao model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Adocao"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Adocao"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Adocao"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Adocao/{id}": {
+      "get": {
+        "tags": [
+          "RegistoAdocao"
+        ],
+        "operationId": "retrieveAdocoes",
+        "summary": "Retrieve Adocoes",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Adocao"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "id not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Retrieve Adocao id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Retrieve Adocao id 2"
+              }
+            }
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "RegistoAdocao"
+        ],
+        "operationId": "updateAdocao",
+        "summary": "Update Adocao",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Adocao PUI success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "id not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Update Adocao id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Update Adocao id 2"
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Adocao"
+              },
+              "examples": {
+                "AdocaoExample01": {
+                  "$ref": "#/components/examples/AdocaoExample01"
+                },
+                "AdocaoExample02": {
+                  "$ref": "#/components/examples/AdocaoExample02"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "RegistoAdocao"
+        ],
+        "operationId": "deleteAdocao",
+        "summary": "Delete adocao",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "id not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Delete Adocao id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Delete Adocao id 2"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/Voluntario": {
+      "get": {
+        "tags": [
+          "RegistoVoluntario"
+        ],
+        "operationId": "retrieveVoluntario",
+        "summary": "Retrieve Voluntario",
+        "responses": {
+          "200": {
+            "description": "Array of Voluntario model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Voluntario"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Voluntario"
+                  },
+                  "xml": {
+                    "name": "Voluntario"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "RegistoVoluntario"
+        ],
+        "operationId": "createVoluntario",
+        "summary": "Create Voluntario",
+        "responses": {
+          "200": {
+            "description": "Create an Voluntario model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Voluntario"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Voluntario"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Voluntario"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Voluntario/{id}": {
+      "get": {
+        "tags": [
+          "RegistoVoluntario"
+        ],
+        "operationId": "retrieveVoluntarios",
+        "summary": "Retrieve Voluntarios",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Voluntario"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "id not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Retrieve Voluntario id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Retrieve Voluntario id 2"
+              }
+            }
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "RegistoVoluntario"
+        ],
+        "operationId": "updateVoluntario",
+        "summary": "Update Voluntario",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Voluntario PUI success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "id not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Update Voluntario id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Update Voluntario id 2"
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Voluntario"
+              },
+              "examples": {
+                "AdocaoExample01": {
+                  "$ref": "#/components/examples/VoluntarioExample01"
+                },
+                "AdocaoExample02": {
+                  "$ref": "#/components/examples/VoluntarioExample02"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "RegistoVoluntario"
+        ],
+        "operationId": "deleteVoluntario",
+        "summary": "Delete voluntario",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "id not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Delete Voluntario id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Delete Voluntario id 2"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/Donations": {
+      "get": {
+        "tags": [
+          "Donations"
+        ],
+        "operationId": "retrieveDonation",
+        "summary": "Retrieve Donation",
+        "responses": {
+          "200": {
+            "description": "Array of Donations model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Donation"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Donation"
+                  },
+                  "xml": {
+                    "name": "Doação"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Donations"
+        ],
+        "operationId": "createDonation",
+        "summary": "Create Donation",
+        "responses": {
+          "200": {
+            "description": "Create a Donations model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Donation"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Donation"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Donation"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Donations/{id}": {
+      "get": {
+        "tags": [
+          "Donations"
+        ],
+        "operationId": "retrieveDonations",
+        "summary": "Retrieve Donation",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Donation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "id not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Retrieve Voluntario id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Retrieve Voluntario id 2"
+              }
+            }
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Donations"
+        ],
+        "operationId": "updateDonation",
+        "summary": "Update Donation",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Donations PUI success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "id not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Update Voluntario id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Update Voluntario id 2"
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Donation"
+              },
+              "examples": {
+                "AdocaoExample01": {
+                  "$ref": "#/components/examples/DonationExample01"
+                },
+                "AdocaoExample02": {
+                  "$ref": "#/components/examples/DonationExample02"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Donations"
+        ],
+        "operationId": "deleteDonation",
+        "summary": "Delete Donation",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "id not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "required": true,
+            "examples": {
+              "one": {
+                "value": 1,
+                "summary": "Delete Donation id 1"
+              },
+              "two": {
+                "value": 2,
+                "summary": "Delete Donation id 2"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
